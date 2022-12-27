@@ -15,3 +15,6 @@ gen:
 
 image:
 	@ docker build . -t troydai/grpcecho:latest
+
+integration:
+	@ ./scripts/integration-test.sh
