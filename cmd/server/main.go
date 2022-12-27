@@ -19,7 +19,7 @@ func main() {
 	grpcecho.RegisterServiceServer(server, &echoserver.Server{})
 	reflection.Register(server)
 
-	lis, err := net.Listen("tcp", "localhost:8080")
+	lis, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		log.Fatal(fmt.Errorf("fail to start TCP listener: %w", err))
 	}
@@ -35,7 +35,6 @@ func main() {
 		case <-chSystemSignal:
 			server.GracefulStop()
 		}
-
 	}()
 
 	go func() {
