@@ -1,4 +1,4 @@
-# grpcecho
+# gRPC Beacon
 
 A grpc service that respond to the request. Utility for demo purposes
 
