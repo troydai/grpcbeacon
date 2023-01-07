@@ -1,4 +1,4 @@
-module github.com/troydai/grpcecho
+module github.com/troydai/grpcbeacon
 
 go 1.19
 

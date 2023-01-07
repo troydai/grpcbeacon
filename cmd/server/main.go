@@ -10,13 +10,13 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/troydai/grpcecho/internal/echoserver"
-	grpcecho "github.com/troydai/grpcecho/protos"
+	api "github.com/troydai/grpcbeacon/api/protos"
+	"github.com/troydai/grpcbeacon/internal/beacon"
 )
 
 func main() {
 	server := grpc.NewServer()
-	grpcecho.RegisterServiceServer(server, &echoserver.Server{})
+	api.RegisterBeaconServer(server, &beacon.Server{})
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", ":8080")

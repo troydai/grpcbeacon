@@ -11,7 +11,7 @@ tools:
 gen:
 	@ protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    protos/echo.proto
+    api/protos/beacon.proto
 
 image:
 	@ docker build . -t troydai/grpcecho:latest
