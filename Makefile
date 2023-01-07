@@ -1,4 +1,4 @@
-.PHONE: tools gen
+.PHONE: bin tools gen image push integration
 
 bin:
 	@ go build -o artifacts/server cmd/server/main.go 
@@ -14,7 +14,13 @@ gen:
     api/protos/beacon.proto
 
 image:
-	@ docker build . -t troydai/grpcecho:latest
+	@ docker build \
+		-t troydai/grpcbeacon:latest \
+		-t troydai/grpcbeacon:`git describe --tags` \
+		.
+
+push: image
+	@ docker push troydai/grpcbeacon:`git describe --tags`
 
 integration:
 	@ ./scripts/integration-test.sh
