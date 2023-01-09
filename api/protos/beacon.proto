@@ -8,6 +8,7 @@ message SignalReqeust {
 
 message SignalResponse {
     string reply = 1;
+    map<string, string> details = 10;
 }
 
 service Beacon {

@@ -3,6 +3,7 @@ package beacon
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	api "github.com/troydai/grpcbeacon/api/protos"
@@ -10,6 +11,20 @@ import (
 
 type Server struct {
 	api.UnimplementedBeaconServer
+
+	details map[string]string
+}
+
+var _ api.BeaconServer = (*Server)(nil)
+
+func NewServer() *Server {
+	s := &Server{
+		details: make(map[string]string),
+	}
+
+	s.details["Hostname"] = os.Getenv("HOSTNAME")
+
+	return s
 }
 
 func (s *Server) Signal(_ context.Context, req *api.SignalReqeust) (*api.SignalResponse, error) {

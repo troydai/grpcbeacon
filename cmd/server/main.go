@@ -16,7 +16,7 @@ import (
 
 func main() {
 	server := grpc.NewServer()
-	api.RegisterBeaconServer(server, &beacon.Server{})
+	api.RegisterBeaconServer(server, beacon.NewServer())
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", ":8080")
