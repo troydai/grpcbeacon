@@ -32,5 +32,9 @@ func (s *Server) Signal(_ context.Context, req *api.SignalReqeust) (*api.SignalR
 		Reply: fmt.Sprintf("Beacon signal at %s", time.Now().Format(time.RFC1123)),
 	}
 
+	if len(s.details) > 0 {
+		resp.Details = s.details
+	}
+
 	return resp, nil
 }
