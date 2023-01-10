@@ -3,10 +3,10 @@ package beacon
 import (
 	"context"
 	"fmt"
-	"os"
 	"time"
 
 	api "github.com/troydai/grpcbeacon/api/protos"
+	"github.com/troydai/grpcbeacon/internal/settings"
 )
 
 type Server struct {
@@ -17,12 +17,13 @@ type Server struct {
 
 var _ api.BeaconServer = (*Server)(nil)
 
-func NewServer() *Server {
+func NewServer(env settings.Environment) *Server {
 	s := &Server{
 		details: make(map[string]string),
 	}
 
-	s.details["Hostname"] = os.Getenv("HOSTNAME")
+	s.details["Hostname"] = env.HostName
+	s.details["Flockname"] = env.FlockName
 
 	return s
 }

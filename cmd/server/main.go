@@ -12,11 +12,17 @@ import (
 
 	api "github.com/troydai/grpcbeacon/api/protos"
 	"github.com/troydai/grpcbeacon/internal/beacon"
+	"github.com/troydai/grpcbeacon/internal/settings"
 )
 
 func main() {
+	env, err := settings.LoadEnvironment()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	server := grpc.NewServer()
-	api.RegisterBeaconServer(server, beacon.NewServer())
+	api.RegisterBeaconServer(server, beacon.NewServer(env))
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", ":8080")
