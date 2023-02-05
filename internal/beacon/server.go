@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	api "github.com/troydai/grpcbeacon/api/protos"
+	api "github.com/troydai/grpcbeacon/gen/api/protos"
 	"github.com/troydai/grpcbeacon/internal/settings"
 )
 

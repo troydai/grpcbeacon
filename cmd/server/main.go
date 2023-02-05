@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	api "github.com/troydai/grpcbeacon/api/protos"
+	api "github.com/troydai/grpcbeacon/gen/api/protos"
 	"github.com/troydai/grpcbeacon/internal/beacon"
 	"github.com/troydai/grpcbeacon/internal/settings"
 )

@@ -17,7 +17,7 @@ FROM alpine
 
 WORKDIR /opt/bin
 
-COPY --from=builder /src/artifacts/server /opt/bin/server
+COPY --from=builder /src/bin/server /opt/bin/server
 COPY --from=builder /go/bin/grpcurl /opt/bin/grpcurl
 
 EXPOSE 8080
