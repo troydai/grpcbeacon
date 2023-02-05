@@ -6,8 +6,9 @@ IMAGE_NAME="troydai/grpcbeacon"
 IMAGE_TAG="integration-test"
 IMAGE="$IMAGE_NAME:$IMAGE_TAG"
 
-echo "[1] Building image $IMAGE"
+echo "[1] Building"
 docker build . -q -t $IMAGE > /dev/null
+make bin
 
 echo "[2] Starting docker container"
 docker ps -f label=purpose=test -qa | xargs docker rm -f > /dev/null
@@ -24,7 +25,7 @@ echo "[4] Testing beacon signal"
 grpcurl -plaintext -d '' "localhost:$PORT" grpcbeacon.Beacon/Signal > /dev/null
 
 echo "[5] Testing Go gRPC client"
-go run cmd/goclient/main.go "localhost:$PORT" > /dev/null
+bin/goclient "localhost:$PORT" > /dev/null
 
 echo "[0] Clean up containers"
 docker ps -f label=purpose=test -qa | xargs docker rm -f > /dev/null

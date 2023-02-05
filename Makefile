@@ -7,7 +7,8 @@ GO_FILES=$(shell find . -name '*.go' -type f -not -path "./vendor/*")
 PROTO_FILES=$(shell find . -name '*.proto' -type f -not -path "./vendor/*")
 
 bin: gen $(GO_FILES)
-	@ go build -o $(OUTPUT_DIR)/$(OUTPUT_NAME) $(MAIN_FILE)
+	@ go build -o $(OUTPUT_DIR)/server   cmd/server/main.go
+	@ go build -o $(OUTPUT_DIR)/goclient cmd/goclient/main.go
 
 tools:
 	@ sudo apt update && sudo apt install -y protobuf-compiler
