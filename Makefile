@@ -10,6 +10,9 @@ bin: gen $(GO_FILES)
 	@ go build -o $(OUTPUT_DIR)/server   cmd/server/main.go
 	@ go build -o $(OUTPUT_DIR)/goclient cmd/goclient/main.go
 
+run: bin
+	@ ./bin/server
+
 tools:
 	@ sudo apt update && sudo apt install -y protobuf-compiler
 	@ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
