@@ -10,6 +10,7 @@ OUTPUT_NAME=server
 MAIN_FILE=cmd/server/main.go
 GO_FILES=$(shell find . -name '*.go' -type f -not -path "./vendor/*")
 PROTO_FILES=$(shell find . -name '*.proto' -type f -not -path "./vendor/*")
+ARCH_LIST="linux/arm64/v8,linux/amd64,darwin/arm64"
 
 bin: gen $(GO_FILES)
 	@ echo "Building under $(OUTPUT_DIR) for $(OS)/$(ARCH)"
@@ -31,17 +32,13 @@ gen: $(PROTO_FILES)
     api/protos/beacon.proto
 
 image:
-	@ docker buildx build \
-		--platform=arm64,amd64 \
-		-t troydai/grpcbeacon:latest \
-		-t troydai/grpcbeacon:`git describe --tags` \
-		.
+	@ docker buildx build --platform=$(ARCH_LIST) -t troydai/grpcbeacon:latest .
 
 container-run: image
 	@ docker run --platform=linux/arm64 --rm -it -p 50001:8080 troydai/grpcbeacon:latest
 
 push: image
-	@ docker push troydai/grpcbeacon:`git describe --tags`
+	@ docker buildx build --platform=$(ARCH_LIST) -t troydai/grpcbeacon:`git describe --tags` --push .
 
 integration:
 	@ ./scripts/integration-test.sh
