@@ -1,24 +1,29 @@
-FROM golang:alpine AS builder
+FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
 
-RUN apk update && apk add --no-cache make protobuf-dev
-RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@v1.8.7
+FROM --platform=$BUILDPLATFORM golang:alpine AS builder
+
+COPY --from=xx / /
+ARG TARGETPLATFORM
+
+RUN xx-info env
+
+RUN xx-apk update && xx-apk add --no-cache make protobuf-dev
+RUN xx-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+RUN xx-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 WORKDIR /src
 COPY go.mod /src
 COPY go.sum /src
-RUN go mod download
+RUN xx-go mod download
 
 COPY . /src
-RUN make bin
+RUN xx-go build -v -o bin/server   cmd/server/main.go
+RUN xx-go build -v -o bin/goclient cmd/goclient/main.go
 
-FROM alpine
+FROM --platform=$BUILDPLATFORM scratch
 
 WORKDIR /opt/bin
-
 COPY --from=builder /src/bin/server /opt/bin/server
-COPY --from=builder /go/bin/grpcurl /opt/bin/grpcurl
 
 EXPOSE 8080
 
