@@ -35,7 +35,7 @@ image:
 	@ docker buildx build --platform=$(ARCH_LIST) -t troydai/grpcbeacon:latest .
 
 container-run: image
-	@ docker run --platform=linux/arm64 --rm -it -p 50001:8080 troydai/grpcbeacon:latest
+	@ docker run --platform=$(OS)/$(ARCH) --rm -it -p 50001:8080 troydai/grpcbeacon:latest
 
 push:
 	@ docker buildx build --platform=$(ARCH_LIST) -t troydai/grpcbeacon:`git describe --tags` --push .
