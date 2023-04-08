@@ -20,7 +20,7 @@ COPY . /src
 RUN xx-go build -v -o bin/server   cmd/server/main.go
 RUN xx-go build -v -o bin/goclient cmd/goclient/main.go
 
-FROM --platform=$BUILDPLATFORM scratch
+FROM --platform=$BUILDPLATFORM scratch AS server
 
 WORKDIR /opt/bin
 COPY --from=builder /src/bin/server /opt/bin/server
@@ -28,3 +28,12 @@ COPY --from=builder /src/bin/server /opt/bin/server
 EXPOSE 8080
 
 ENTRYPOINT [ "/opt/bin/server" ]
+
+FROM --platform=$BUILDPLATFORM scratch AS prober
+
+WORKDIR /opt/bin
+COPY --from=builder /src/bin/goclient /opt/bin/goclient
+
+EXPOSE 8080
+
+ENTRYPOINT [ "/opt/bin/goclient" ]
