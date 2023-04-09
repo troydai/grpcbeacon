@@ -32,8 +32,8 @@ gen: $(PROTO_FILES)
     api/protos/beacon.proto
 
 image:
-	@ docker buildx build --platform=$(ARCH_LIST) --target server -t troydai/grpcbeacon:latest --load .
-	@ docker buildx build --platform=$(ARCH_LIST) --target prober -t troydai/grpcprober:latest --load .
+	@ docker buildx build --platform=$(ARCH_LIST) --target server -t troydai/grpcbeacon:latest .
+	@ docker buildx build --platform=$(ARCH_LIST) --target prober -t troydai/grpcprober:latest .
 
 container-run: image
 	@ docker run --platform=$(OS)/$(ARCH) --rm -it -p 50001:8080 troydai/grpcbeacon:latest

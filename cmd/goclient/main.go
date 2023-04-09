@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"os/signal"
 	"time"
 
 	"go.uber.org/zap"
@@ -45,6 +46,17 @@ func main() {
 	if err != nil {
 		logger.Fatal("fail to start cron", zap.Error(err))
 	}
+
+	go func() {
+		chSystemSignal := make(chan os.Signal, 1)
+		signal.Notify(chSystemSignal, os.Interrupt)
+
+		select {
+		case <-term:
+		case <-chSystemSignal:
+			cancel()
+		}
+	}()
 
 	<-term
 }
