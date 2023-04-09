@@ -29,7 +29,7 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	api.RegisterBeaconServer(server, beacon.NewServer(env))
+	api.RegisterBeaconServer(server, beacon.NewServer(env, logger))
 	reflection.Register(server)
 
 	lis, err := net.Listen("tcp", ":8080")
