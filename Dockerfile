@@ -16,6 +16,11 @@ COPY go.mod /src
 COPY go.sum /src
 RUN xx-go mod download
 
+RUN mkdir -p gen
+RUN protoc --go_out=gen --go_opt=paths=source_relative \
+    --go-grpc_out=gen --go-grpc_opt=paths=source_relative \
+    api/protos/beacon.proto
+
 COPY . /src
 RUN xx-go build -v -o bin/server   cmd/server/main.go
 RUN xx-go build -v -o bin/goclient cmd/goclient/main.go
