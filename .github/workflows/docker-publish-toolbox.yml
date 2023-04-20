@@ -16,7 +16,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: troydai/toolbox
+  IMAGE_NAME: troydai/beacon-toolbox
 
 
 jobs:
