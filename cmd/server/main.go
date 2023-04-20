@@ -6,7 +6,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"time"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -57,19 +56,6 @@ func main() {
 		defer close(chServerStopped)
 		logger.Info("Starting server")
 		server.Serve(lis)
-	}()
-
-	go func() {
-		ticker := time.NewTicker(5 * time.Second)
-		for {
-			select {
-			case <-ticker.C:
-				logger.Info("Server is running")
-			case <-chServerStopped:
-				logger.Info("Ticker stopped")
-				return
-			}
-		}
 	}()
 
 	<-chServerStopped
