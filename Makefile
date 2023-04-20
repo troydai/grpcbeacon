@@ -32,15 +32,8 @@ gen: $(PROTO_FILES)
     api/protos/beacon.proto
 
 image:
-	@ docker buildx build --platform=$(ARCH_LIST) --target server -t troydai/grpcbeacon:latest .
-	@ docker buildx build --platform=$(ARCH_LIST) --target prober -t troydai/grpcprober:latest .
-
-container-run: image
-	@ docker run --platform=$(OS)/$(ARCH) --rm -it -p 50001:8080 troydai/grpcbeacon:latest
-
-push:
-	@ docker buildx build --platform=$(ARCH_LIST) --target server -t troydai/grpcbeacon:`git describe --tags` --push .
-	@ docker buildx build --platform=$(ARCH_LIST) --target prober -t troydai/grpcprober:`git describe --tags` --push .
+	@ docker build --target server -t troydai/grpcbeacon:latest .
+	@ docker build --target prober -t troydai/grpcprober:latest .
 
 integration:
 	@ ./scripts/integration-test.sh
