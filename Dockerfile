@@ -1,3 +1,4 @@
+FROM fullstorydev/grpcurl AS grpcurl
 FROM golang:alpine3.17 AS builder
 
 RUN apk update && apk add --no-cache make protobuf-dev protoc
@@ -36,3 +37,12 @@ COPY --from=builder /src/bin/goclient /opt/bin/goclient
 EXPOSE 8080
 
 ENTRYPOINT [ "/opt/bin/goclient" ]
+
+FROM alpine AS toolbox
+
+RUN apk add curl bash jq
+
+COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
+COPY --from=builder /src/api/protos/beacon.proto /etc/protos/beacon.proto
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
