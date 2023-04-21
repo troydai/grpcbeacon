@@ -44,5 +44,6 @@ RUN apk add curl bash jq
 
 COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
 COPY --from=builder /src/api/protos/beacon.proto /etc/protos/beacon.proto
+COPY --from=builder /src/cmd/toolbox/curl.sh /run/curl.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
