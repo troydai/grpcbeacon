@@ -4,11 +4,14 @@ import (
 	"fmt"
 
 	env "github.com/caarlos0/env/v6"
+	"go.uber.org/fx"
 )
 
+var Module = fx.Provide(LoadEnvironment)
+
 type Environment struct {
-	HostName  string `env:"HOSTNAME"`
-	FlockName string `env:"FLOCKNAME"`
+	HostName   string `env:"HOSTNAME"`
+	BeaconName string `env:"BEACON_NAME"`
 }
 
 func LoadEnvironment() (Environment, error) {

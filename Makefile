@@ -15,7 +15,6 @@ ARCH_LIST="linux/arm64/v8,linux/amd64,darwin/arm64"
 bin: gen $(GO_FILES)
 	@ echo "Building under $(OUTPUT_DIR) for $(OS)/$(ARCH)"
 	@ GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_PATH)/server   cmd/server/main.go
-	@ GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_PATH)/goclient cmd/goclient/main.go
 
 run: bin
 	@ $(OUTPUT_PATH)/server
@@ -30,10 +29,3 @@ gen: $(PROTO_FILES)
 	@ protoc --go_out=gen --go_opt=paths=source_relative \
     --go-grpc_out=gen --go-grpc_opt=paths=source_relative \
     api/protos/beacon.proto
-
-image:
-	@ docker build --target server -t troydai/grpcbeacon:latest .
-	@ docker build --target prober -t troydai/grpcprober:latest .
-
-integration:
-	@ ./scripts/integration-test.sh
