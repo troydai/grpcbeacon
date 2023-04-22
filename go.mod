@@ -3,6 +3,7 @@ module github.com/troydai/grpcbeacon
 go 1.20
 
 require (
+	github.com/BurntSushi/toml v1.2.1
 	github.com/caarlos0/env/v6 v6.10.1
 	go.uber.org/fx v1.19.2
 	go.uber.org/zap v1.24.0
