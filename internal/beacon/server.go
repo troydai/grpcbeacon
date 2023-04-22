@@ -5,34 +5,35 @@ import (
 	"fmt"
 	"time"
 
-	api "github.com/troydai/grpcbeacon/gen/api/protos"
-	"github.com/troydai/grpcbeacon/internal/settings"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/metadata"
+
+	api "github.com/troydai/grpcbeacon/gen/api/protos"
+	"github.com/troydai/grpcbeacon/internal/settings"
 )
 
-type Server struct {
+type service struct {
 	api.UnimplementedBeaconServer
 
 	details map[string]string
 	logger  *zap.Logger
 }
 
-var _ api.BeaconServer = (*Server)(nil)
+var _ api.BeaconServer = (*service)(nil)
 
-func NewServer(env settings.Environment, logger *zap.Logger) *Server {
-	s := &Server{
+func newService(env settings.Environment, logger *zap.Logger) *service {
+	s := &service{
 		details: make(map[string]string),
 		logger:  logger,
 	}
 
 	s.details["Hostname"] = env.HostName
-	s.details["Flockname"] = env.FlockName
+	s.details["BeaconName"] = env.BeaconName
 
 	return s
 }
 
-func (s *Server) Signal(ctx context.Context, req *api.SignalReqeust) (*api.SignalResponse, error) {
+func (s *service) Signal(ctx context.Context, req *api.SignalRequest) (*api.SignalResponse, error) {
 	logger := s.logger
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		logger = logger.With(zap.Any("metadata", md))

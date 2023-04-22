@@ -17,8 +17,7 @@ RUN protoc --go_out=gen --go_opt=paths=source_relative \
     --go-grpc_out=gen --go-grpc_opt=paths=source_relative \
     api/protos/beacon.proto
 
-RUN go build -v -o bin/server   cmd/server/main.go
-RUN go build -v -o bin/goclient cmd/goclient/main.go
+RUN go build -v -o bin/server cmd/server/main.go
 
 FROM scratch AS server
 
@@ -28,15 +27,6 @@ COPY --from=builder /src/bin/server /opt/bin/server
 EXPOSE 8080
 
 ENTRYPOINT [ "/opt/bin/server" ]
-
-FROM scratch AS prober
-
-WORKDIR /opt/bin
-COPY --from=builder /src/bin/goclient /opt/bin/goclient
-
-EXPOSE 8080
-
-ENTRYPOINT [ "/opt/bin/goclient" ]
 
 FROM alpine AS toolbox
 

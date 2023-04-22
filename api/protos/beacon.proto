@@ -1,9 +1,10 @@
 syntax = "proto3";
-package grpcbeacon;
+// package gb;
 
 option go_package = "github.com/troydai/grpcbeacon/api/protos";
 
-message SignalReqeust {
+message SignalRequest {
+    string message = 1;
 }
 
 message SignalResponse {
@@ -12,5 +13,5 @@ message SignalResponse {
 }
 
 service Beacon {
-    rpc Signal(SignalReqeust) returns (SignalResponse) {}
+    rpc Signal(SignalRequest) returns (SignalResponse) {}
 }
