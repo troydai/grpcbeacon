@@ -9,6 +9,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/troydai/grpcbeacon/internal/settings"
 )
 
 var Module = fx.Invoke(RegisterRPCServer)
@@ -20,6 +22,7 @@ type (
 		Lifecycle     fx.Lifecycle
 		Logger        *zap.Logger
 		GRPCRegisters []GRPCRegister `group:"grpc_registers"`
+		Config        settings.Configuration
 	}
 
 	GRPCRegister interface {
@@ -44,7 +47,7 @@ func RegisterRPCServer(param Param) error {
 		}
 	}
 
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", param.Config.Address, param.Config.Port))
 	if err != nil {
 		return fmt.Errorf("fail to start TCP listener: %w", err)
 	}

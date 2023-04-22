@@ -12,14 +12,27 @@ import (
 
 var Module = fx.Provide(ProvideRegister)
 
-type Result struct {
-	fx.Out
+type (
+	Param struct {
+		fx.In
 
-	Register rpc.GRPCRegister `group:"grpc_registers"`
-}
+		Env    settings.Environment
+		Config settings.Configuration
+		Logger *zap.Logger
+	}
 
-func ProvideRegister(env settings.Environment, logger *zap.Logger) Result {
-	svc := newService(env, logger)
+	Result struct {
+		fx.Out
+
+		Register rpc.GRPCRegister `group:"grpc_registers"`
+	}
+)
+
+func ProvideRegister(param Param) Result {
+	hostName := param.Env.HostName
+	beaconName := param.Config.Name
+
+	svc := newService(hostName, beaconName, param.Logger)
 
 	return Result{
 		Register: rpc.GRPCRegisterFromFn(func(s *grpc.Server) error {

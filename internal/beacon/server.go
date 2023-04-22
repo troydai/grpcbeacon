@@ -9,7 +9,6 @@ import (
 	"google.golang.org/grpc/metadata"
 
 	api "github.com/troydai/grpcbeacon/gen/api/protos"
-	"github.com/troydai/grpcbeacon/internal/settings"
 )
 
 type service struct {
@@ -21,14 +20,14 @@ type service struct {
 
 var _ api.BeaconServer = (*service)(nil)
 
-func newService(env settings.Environment, logger *zap.Logger) *service {
+func newService(hostName, beaconName string, logger *zap.Logger) *service {
 	s := &service{
 		details: make(map[string]string),
 		logger:  logger,
 	}
 
-	s.details["Hostname"] = env.HostName
-	s.details["BeaconName"] = env.BeaconName
+	s.details["Hostname"] = hostName
+	s.details["BeaconName"] = beaconName
 
 	return s
 }
