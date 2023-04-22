@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/BurntSushi/toml v1.2.1
-	github.com/caarlos0/env/v6 v6.10.1
+	github.com/caarlos0/env/v8 v8.0.0
 	go.uber.org/fx v1.19.2
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.51.0
