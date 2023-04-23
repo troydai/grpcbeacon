@@ -1,7 +1,6 @@
 syntax = "proto3";
-// package gb;
 
-option go_package = "github.com/troydai/grpcbeacon/api/protos";
+option go_package = "github.com/troydai/grpcbeacon/api/protos/beaconapi";
 
 message SignalRequest {
     string message = 1;
