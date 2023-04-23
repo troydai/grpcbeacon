@@ -1,5 +1,15 @@
 set -o vi
 
-echo "Welcome to the toolbox!"
+echo ""
+echo "████████  ██████   ██████  ██      ██████   ██████  ██   ██ "
+echo "   ██    ██    ██ ██    ██ ██      ██   ██ ██    ██  ██ ██  "
+echo "   ██    ██    ██ ██    ██ ██      ██████  ██    ██   ███   "
+echo "   ██    ██    ██ ██    ██ ██      ██   ██ ██    ██  ██ ██  "
+echo "   ██     ██████   ██████  ███████ ██████   ██████  ██   ██ "
+echo ""
+echo "Host name: $HOSTNAME"
+echo "     Date: `date`"
+echo "     User: `whoami`"
+echo ""
 
 cd ~
