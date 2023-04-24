@@ -30,7 +30,7 @@ FROM alpine AS toolbox
 RUN apk add curl bash jq vim tcpdump
 
 COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
-COPY --from=builder /src/api/protos/* /root/
-COPY --from=builder /src/cmd/toolbox/* /root/
+COPY api/protos/beacon/api.proto $HOME/protos/
+COPY cmd/toolbox/* $HOME/
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -6,6 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	healthapi "github.com/troydai/grpcbeacon/gen/api/protos/grpchealth"
 	"github.com/troydai/grpcbeacon/internal/rpc"
@@ -24,13 +25,13 @@ var _ rpc.GRPCRegister = (*healthcheck)(nil)
 
 func (s *healthcheck) Check(_ context.Context, req *healthapi.HealthCheckRequest) (*healthapi.HealthCheckResponse, error) {
 	switch req.Service {
-	case "":
+	case "", "liveness", "readiness":
 		return _healthResp, nil
 	case "Beacon":
 		return _healthResp, nil
 	}
 
-	return nil, grpc.Errorf(codes.NotFound, "service %s not found", req.Service)
+	return nil, status.Errorf(codes.NotFound, "service %s not found", req.Service)
 }
 
 func (s *healthcheck) Register(server *grpc.Server) error {
