@@ -11,10 +11,10 @@ GO_FILES=$(shell find . -name '*.go' -type f -not -path "./vendor/*")
 PROTO_FILES=$(shell find . -name '*.proto' -type f -not -path "./vendor/*")
 
 bin: gen $(GO_FILES)
-	@ GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_DIR)/$(OUTPUT_NAME) $(MAIN_FILE)
+	GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_DIR)/$(OUTPUT_NAME) $(MAIN_FILE)
 
 run: bin
-	@ $(OUTPUT_PATH)/server
+	$(OUTPUT_DIR)/$(OUTPUT_NAME)
 
 tools:
 	@ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
