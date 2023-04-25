@@ -28,9 +28,12 @@ ENTRYPOINT [ "/opt/bin/server" ]
 FROM alpine AS toolbox
 
 RUN apk add curl bash jq vim tcpdump
+RUN adduser -D -u 1000 toolbox
+
+WORKDIR $HOME
 
 COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
-COPY api/protos/beacon/api.proto $HOME/protos/
-COPY cmd/toolbox/* $HOME/
+COPY api/protos/beacon/api.proto ./protos/
+COPY cmd/toolbox/* ./
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
