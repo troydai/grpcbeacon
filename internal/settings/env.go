@@ -1,9 +1,16 @@
 package settings
 
+/*
+settings package
+
+
+
+*/
 import (
 	"flag"
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/BurntSushi/toml"
 	env "github.com/caarlos0/env/v8"
@@ -21,9 +28,21 @@ type (
 	}
 
 	Configuration struct {
-		Name    string
-		Address string
-		Port    int
+		Name    string            `toml:"name"`
+		Address string            `toml:"address"`
+		Port    int               `toml:"port"`
+		Logging *Logging          `toml:"logging"`
+		TLS     *TLSConfiguration `toml:"tls"`
+	}
+
+	Logging struct {
+		Development bool
+	}
+
+	TLSConfiguration struct {
+		Enabled      bool
+		KeyFilePath  string
+		CertFilePath string
 	}
 )
 
@@ -36,13 +55,22 @@ func LoadEnvironment() (Environment, error) {
 	return e, nil
 }
 
-func LoadConfig(logger *zap.Logger) (Configuration, error) {
+func LoadConfig() (Configuration, error) {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		return Configuration{}, fmt.Errorf("fail to create logger: %w", err)
+	}
+
 	var configFlag string
 	flag.StringVar(&configFlag, "config", "", "path to config file")
 	flag.Parse()
 
 	if configFlag == "" {
 		configFlag = _defaultConfigPath
+	}
+
+	if !path.IsAbs(configFlag) {
+		configFlag = path.Join(os.Getenv("PWD"), configFlag)
 	}
 
 	logger.Info(

@@ -1,6 +1,7 @@
 package logging
 
 import (
+	"github.com/troydai/grpcbeacon/internal/settings"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 	"go.uber.org/zap"
@@ -13,6 +14,10 @@ var Module = fx.Options(
 	}),
 )
 
-func NewLogger() (*zap.Logger, error) {
-	return zap.NewDevelopment()
+func NewLogger(c settings.Configuration) (*zap.Logger, error) {
+	if c.Logging.Development {
+		return zap.NewDevelopment()
+	}
+
+	return zap.NewProduction()
 }

@@ -8,17 +8,17 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc/metadata"
 
-	beaconapi "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
+	pb "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
 )
 
 type service struct {
-	beaconapi.UnimplementedBeaconServer
+	pb.UnimplementedBeaconServiceServer
 
 	details map[string]string
 	logger  *zap.Logger
 }
 
-var _ beaconapi.BeaconServer = (*service)(nil)
+var _ pb.BeaconServiceServer = (*service)(nil)
 
 func newService(hostName, beaconName string, logger *zap.Logger) *service {
 	s := &service{
@@ -32,14 +32,14 @@ func newService(hostName, beaconName string, logger *zap.Logger) *service {
 	return s
 }
 
-func (s *service) Signal(ctx context.Context, req *beaconapi.SignalRequest) (*beaconapi.SignalResponse, error) {
+func (s *service) Signal(ctx context.Context, req *pb.SignalRequest) (*pb.SignalResponse, error) {
 	logger := s.logger
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		logger = logger.With(zap.Any("metadata", md))
 	}
 
 	logger.Info("Signal received")
-	resp := &beaconapi.SignalResponse{
+	resp := &pb.SignalResponse{
 		Reply: fmt.Sprintf("Beacon signal at %s", time.Now().Format(time.RFC1123)),
 	}
 

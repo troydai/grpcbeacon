@@ -14,7 +14,7 @@ bin: gen $(GO_FILES)
 	GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_DIR)/$(OUTPUT_NAME) $(MAIN_FILE)
 
 run: bin
-	$(OUTPUT_DIR)/$(OUTPUT_NAME)
+	$(OUTPUT_DIR)/$(OUTPUT_NAME) -config=./demo/demo.conf
 
 tools:
 	@ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28

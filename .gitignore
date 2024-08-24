@@ -18,9 +18,6 @@
 artifacts/
 bin/
 
-# Geneated files
-gen/
-
 # IDE/Text Editor
 .vscode/
 

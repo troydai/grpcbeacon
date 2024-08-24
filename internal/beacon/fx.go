@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	beaconapi "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
+	pb "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
 	"github.com/troydai/grpcbeacon/internal/rpc"
 	"github.com/troydai/grpcbeacon/internal/settings"
 )
@@ -36,7 +36,7 @@ func ProvideRegister(param Param) Result {
 
 	return Result{
 		Register: rpc.GRPCRegisterFromFn(func(s *grpc.Server) error {
-			beaconapi.RegisterBeaconServer(s, svc)
+			pb.RegisterBeaconServiceServer(s, svc)
 			return nil
 		}),
 	}

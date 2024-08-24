@@ -39,7 +39,17 @@ func RegisterRPCServer(param Param) error {
 		return fmt.Errorf("no grpc register found")
 	}
 
-	s := grpc.NewServer()
+	var serverOptions []grpc.ServerOption
+
+	tlsOpt, err := DetermineTLSOption(param.Config)
+	if err != nil {
+		return fmt.Errorf("fail to determine TLS option: %w", err)
+	}
+	if tlsOpt != nil {
+		serverOptions = append(serverOptions, tlsOpt)
+	}
+
+	s := grpc.NewServer(serverOptions...)
 	reflection.Register(s)
 	for _, r := range param.GRPCRegisters {
 		if err := r.Register(s); err != nil {
