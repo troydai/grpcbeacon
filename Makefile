@@ -28,3 +28,6 @@ gen: $(PROTO_FILES)
 		--go-grpc_out=gen \
 		--go-grpc_opt=paths=source_relative \
 		$(PROTO_FILES)
+
+test:
+	@ go test -v -race ./...

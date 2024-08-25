@@ -15,7 +15,7 @@ var Module = fx.Options(
 )
 
 func NewLogger(c settings.Configuration) (*zap.Logger, error) {
-	if c.Logging.Development {
+	if c.Logging != nil && c.Logging.Development {
 		return zap.NewDevelopment()
 	}
 
