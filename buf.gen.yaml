@@ -1,0 +1,21 @@
+version: v2
+clean: true
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: "gen/go"
+plugins:
+  - remote: buf.build/protocolbuffers/go:v1.31.0
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - remote: buf.build/grpc/go:v1.5.1
+    out: gen/go
+    opt:
+      - paths=source_relative
+inputs:
+  - directory: proto
+  - module: buf.build/grpc/grpc
+    types:
+      - grpc.health.v1

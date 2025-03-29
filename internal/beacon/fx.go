@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	pb "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
+	pb "github.com/troydai/grpcbeacon/gen/go/troydai/grpcbeacon/v1"
 	"github.com/troydai/grpcbeacon/internal/rpc"
 	"github.com/troydai/grpcbeacon/internal/settings"
 )

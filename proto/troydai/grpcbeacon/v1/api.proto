@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/troydai/grpcbeacon/api/protos/beaconapi";
+package troydai.grpcbeacon.v1;
 
 message SignalRequest {
   string message = 1;

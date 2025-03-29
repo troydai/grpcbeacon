@@ -21,13 +21,8 @@ tools:
 	@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 gen: $(PROTO_FILES)
-	@ mkdir -p gen
-	@ protoc \
-		--go_out=gen \
-		--go_opt=paths=source_relative \
-		--go-grpc_out=gen \
-		--go-grpc_opt=paths=source_relative \
-		$(PROTO_FILES)
+	@ rm -rf gen/go
+	@ buf generate
 
 test:
 	@ go test -v -race ./...

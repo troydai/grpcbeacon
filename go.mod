@@ -1,10 +1,10 @@
 module github.com/troydai/grpcbeacon
 
-go 1.22
+go 1.24
 
 require (
 	github.com/BurntSushi/toml v1.4.0
-	github.com/caarlos0/env/v8 v8.0.0
+	github.com/caarlos0/env/v11 v11.0.0
 	github.com/stretchr/testify v1.8.1
 	go.uber.org/fx v1.22.2
 	go.uber.org/zap v1.27.0

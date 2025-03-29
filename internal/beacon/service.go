@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc/metadata"
 
-	pb "github.com/troydai/grpcbeacon/gen/api/protos/beacon"
+	pb "github.com/troydai/grpcbeacon/gen/go/troydai/grpcbeacon/v1"
 )
 
 type service struct {

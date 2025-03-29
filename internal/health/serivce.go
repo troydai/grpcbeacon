@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	healthapi "github.com/troydai/grpcbeacon/gen/api/protos/grpchealth"
+	healthapi "github.com/troydai/grpcbeacon/gen/go/grpc/health/v1"
 	"github.com/troydai/grpcbeacon/internal/rpc"
 )
 

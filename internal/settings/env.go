@@ -13,7 +13,7 @@ import (
 	"path"
 
 	"github.com/BurntSushi/toml"
-	env "github.com/caarlos0/env/v8"
+	env "github.com/caarlos0/env/v11"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
