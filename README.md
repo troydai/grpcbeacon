@@ -17,6 +17,12 @@ Start server
 make run
 ```
 
+Query
+
+```bash
+grpcurl --cacert ./demo/certs/root.crt.pem localhost:8089 troydai.grpcbeacon.v1.BeaconService.Signal
+```
+
 ## References
 
 - Image registry: https://hub.docker.com/repository/docker/troydai/grpcbeacon
