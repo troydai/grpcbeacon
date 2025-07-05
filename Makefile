@@ -1,7 +1,8 @@
 .PHONY: bin tools gen image push integration
 
 # Override with setting these two and run make with option -e
-ARCH=$(shell uname -m | tr '[:upper:]' '[:lower:]')
+ARCH_RAW=$(shell uname -m | tr '[:upper:]' '[:lower:]')
+ARCH=$(shell echo $(ARCH_RAW) | sed 's/x86_64/amd64/')
 OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 
 OUTPUT_DIR=bin
