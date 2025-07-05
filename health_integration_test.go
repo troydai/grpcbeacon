@@ -27,7 +27,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 	listener, err := net.Listen("tcp", "127.0.0.1:0")
 	require.NoError(t, err)
 	port := listener.Addr().(*net.TCPAddr).Port
-	listener.Close()
+	require.NoError(t, listener.Close())
 
 	// Override configuration for testing
 	testConfig := settings.Configuration{
@@ -67,7 +67,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		require.NoError(t, err)
-		defer conn.Close()
+		defer func() { require.NoError(t, conn.Close()) }()
 
 		client := healthpb.NewHealthClient(conn)
 
@@ -93,7 +93,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		require.NoError(t, err)
-		defer conn.Close()
+		defer func() { require.NoError(t, conn.Close()) }()
 
 		client := healthpb.NewHealthClient(conn)
 
@@ -119,7 +119,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		require.NoError(t, err)
-		defer conn.Close()
+		defer func() { require.NoError(t, conn.Close()) }()
 
 		client := healthpb.NewHealthClient(conn)
 
@@ -143,7 +143,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		require.NoError(t, err)
-		defer conn.Close()
+		defer func() { require.NoError(t, conn.Close()) }()
 
 		client := healthpb.NewHealthClient(conn)
 
@@ -167,7 +167,7 @@ func TestIntegration_HealthCheck(t *testing.T) {
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		)
 		require.NoError(t, err)
-		defer conn.Close()
+		defer func() { require.NoError(t, conn.Close()) }()
 
 		client := healthpb.NewHealthClient(conn)
 
