@@ -30,7 +30,7 @@ gofmt -s -w health_integration_test.go integration_test.go
 - ✅ Updated `golangci/golangci-lint-action@v3` → `@v6`
 - ✅ Updated `codecov/codecov-action@v3` → `@v4`
 - ✅ Updated `actions/cache@v3` → `@v4` (both test and build jobs)
-- ✅ Updated `securecodewarrior/github-action-gosec@master` → `@v2`
+- ✅ Updated `securecodewarrior/github-action-gosec@master` → `securego/gosec@master` (corrected repository)
 - ✅ Updated `github/codeql-action/upload-sarif@v2` → `@v3`
 - ✅ Added error handling with `continue-on-error: true` for security scanner
 

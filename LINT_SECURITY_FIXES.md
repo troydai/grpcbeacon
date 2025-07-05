@@ -87,7 +87,7 @@ Updated **22 action references** across all workflows:
 - ✅ `golangci/golangci-lint-action@v3` → `@v6`
 - ✅ `codecov/codecov-action@v3` → `@v4`
 - ✅ `actions/cache@v3` → `@v4` (2 instances)
-- ✅ `securecodewarrior/github-action-gosec@master` → `@v2`
+- ✅ `securecodewarrior/github-action-gosec@master` → `securego/gosec@master` (corrected action repository)
 - ✅ `github/codeql-action/upload-sarif@v2` → `@v3`
 - ✅ Added error handling with `continue-on-error: true`
 
