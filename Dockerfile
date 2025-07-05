@@ -1,5 +1,5 @@
 FROM fullstorydev/grpcurl AS grpcurl
-FROM golang:alpine3.17 AS builder
+FROM golang:1.24-alpine AS builder
 
 RUN apk update && apk add --no-cache make protobuf-dev protoc
 

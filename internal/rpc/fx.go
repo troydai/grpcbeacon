@@ -67,7 +67,9 @@ func RegisterRPCServer(param Param) error {
 		OnStart: func(ctx context.Context) error {
 			go func() {
 				defer close(serverStopped)
-				s.Serve(lis)
+				if err := s.Serve(lis); err != nil {
+					param.Logger.Error("gRPC server failed", zap.Error(err))
+				}
 			}()
 			return nil
 		},
