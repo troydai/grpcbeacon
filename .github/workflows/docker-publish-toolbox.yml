@@ -49,6 +49,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      - name: Install buf
+        run: go install github.com/bufbuild/buf/cmd/buf@latest
+
+      - name: Generate protocol buffer code
+        run: make gen
+
       - name: Run tests (including integration tests)
         run: |
           go mod download
