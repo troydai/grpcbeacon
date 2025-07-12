@@ -1,0 +1,75 @@
+# Cursor Rules for gRPC Beacon Project
+
+## Issue Documentation Organization
+
+### Rule: Issue Documentation Structure
+When creating documentation for issues, bugs, improvements, or significant changes:
+
+1. **Always organize under `issues/` directory**
+   - Create subdirectory: `issues/[number]-[descriptive-name]/`
+   - Use sequential numbering starting from 001
+   - Use kebab-case for descriptive names
+
+2. **Required files in each issue directory:**
+   - `README.md` - Issue overview, status, and summary
+   - `[ANALYSIS_PLAN].md` - Detailed root cause analysis and solution plan
+   - `[IMPLEMENTATION].md` - Implementation results and testing verification
+   - Additional supporting files as needed
+
+3. **Update the issues index**
+   - Add new issue to `issues/README.md`
+   - Include status, summary, and impact
+
+### Directory Structure Template
+```
+issues/
+├── README.md                    # Issues index and guidelines
+└── [number]-[descriptive-name]/ # Individual issue directory
+    ├── README.md                # Issue overview
+    ├── ANALYSIS_PLAN.md         # Problem analysis and solution
+    ├── IMPLEMENTATION.md        # Results and verification
+    └── [supporting_files]       # Additional documentation
+```
+
+### Example Issue Creation Process
+1. Identify next sequential number (check existing issues)
+2. Create directory: `issues/002-example-issue/`
+3. Create required documentation files
+4. Update `issues/README.md` with new entry
+5. Follow established documentation standards
+
+### Issue Status Lifecycle
+- **OPEN**: Issue identified and being analyzed
+- **IN_PROGRESS**: Solution being implemented  
+- **RESOLVED**: Issue fixed and verified
+- **CLOSED**: Issue resolved and documentation archived
+
+### Documentation Standards
+- Clear problem description and root cause analysis
+- Step-by-step solution implementation
+- Testing and verification results
+- Impact assessment and success metrics
+- Professional formatting with proper headings and sections
+
+---
+
+## Development Workflow Rules
+
+### Rule: Environment Setup
+- Always use `make setup` for initial development environment setup
+- Verify tools with `make check-tools` before making changes
+- Reference `README.md` for current setup instructions
+
+### Rule: Code Generation
+- Use `make gen` to generate protocol buffer code
+- Verify generated files are properly created in `gen/` directory
+- Run complete build `make bin` to verify integration
+
+### Rule: Documentation Updates
+- Update `README.md` when adding new features or changing workflows
+- Include troubleshooting sections for common issues
+- Maintain clear, actionable error messages and solutions
+
+---
+
+**Note**: These rules ensure consistent project organization and comprehensive documentation of all significant changes and improvements.
