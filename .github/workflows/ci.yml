@@ -38,6 +38,12 @@ jobs:
     - name: Verify dependencies
       run: go mod verify
 
+    - name: Install buf
+      run: go install github.com/bufbuild/buf/cmd/buf@latest
+
+    - name: Generate protocol buffer code
+      run: make gen
+
     - name: Run go vet
       run: go vet ./...
 
@@ -88,6 +94,12 @@ jobs:
     - name: Download dependencies
       run: go mod download
 
+    - name: Install buf
+      run: go install github.com/bufbuild/buf/cmd/buf@latest
+
+    - name: Generate protocol buffer code
+      run: make gen
+
     - name: Build server binary
       run: go build -v -o beacon-server ./cmd/server
 
@@ -115,6 +127,12 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
+    - name: Install buf
+      run: go install github.com/bufbuild/buf/cmd/buf@latest
+
+    - name: Generate protocol buffer code
+      run: make gen
+
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v6
       with:
@@ -132,6 +150,12 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version: ${{ env.GO_VERSION }}
+
+    - name: Install buf
+      run: go install github.com/bufbuild/buf/cmd/buf@latest
+
+    - name: Generate protocol buffer code
+      run: make gen
 
     - name: Run Gosec Security Scanner
       uses: securego/gosec@master
