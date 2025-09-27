@@ -10,6 +10,10 @@ MAIN_FILE=cmd/server/main.go
 GO_FILES=$(shell find . -name '*.go' -type f -not -path "./vendor/*")
 PROTO_FILES=$(shell find . -name '*.proto' -type f -not -path "./vendor/*")
 
+tools:
+	@ echo "Installing buf CLI..."
+	@ go install github.com/bufbuild/buf/cmd/buf@v1.34.0
+
 bin: gen $(GO_FILES)
 	GOOS=$(OS) GOARCH=$(ARCH) go build -v -o $(OUTPUT_DIR)/$(OUTPUT_NAME) $(MAIN_FILE)
 
