@@ -1,0 +1,72 @@
+# gRPC Beacon Service - Cursor Rules
+
+## Project Overview
+This is a gRPC beacon service written in Go, designed as a utility for demo purposes. It responds to gRPC requests with beacon signals.
+
+## Technology Stack
+- **Language**: Go 1.24
+- **Framework**: Uber FX (dependency injection)
+- **gRPC**: google.golang.org/grpc v1.73.0
+- **Protocol Buffers**: Uses buf for code generation
+- **Logging**: zap (go.uber.org/zap)
+- **Configuration**: TOML files + environment variables (caarlos0/env)
+
+## Project Structure
+- `cmd/server/main.go` - Main entry point using FX modules
+- `internal/` - Internal packages:
+  - `beacon/` - Beacon service implementation
+  - `health/` - Health check service
+  - `logging/` - Logging configuration
+  - `rpc/` - gRPC server setup and TLS configuration
+  - `settings/` - Configuration management
+- `proto/troydai/grpcbeacon/v1/` - Protocol buffer definitions
+- `gen/go/` - Generated Go code from protobufs (do not edit manually)
+- `demo/` - Demo configuration and certificates
+
+## Code Generation
+- **Protobuf**: Use `buf generate` to regenerate code from `.proto` files
+- Generated code goes to `gen/go/` directory
+- Never manually edit files in `gen/go/` - they are auto-generated
+- Run `make gen` to regenerate protobuf code
+
+## Build & Run
+- **Build**: `make bin` - builds the server binary
+- **Run**: `make run` - builds and runs with demo config
+- **Test**: `make test` - runs tests with race detector
+- Binary output: `bin/server`
+
+## Configuration
+- Configuration files use TOML format
+- Demo config: `demo/demo.conf`
+- Production config: `conf/beacon.conf`
+- Environment variables can override config values
+
+## Certificates
+- Demo certificates in `demo/certs/`
+- Use `./scripts/update_certs.sh ./demo/certs` to regenerate expired certs
+- Root CA cert: `demo/certs/root.crt.pem`
+
+## Testing
+- Integration tests: `integration_test.go`, `health_integration_test.go`
+- Use `grpcurl` for manual testing:
+  ```bash
+  grpcurl --cacert ./demo/certs/root.crt.pem localhost:8089 troydai.grpcbeacon.v1.BeaconService.Signal
+  ```
+
+## Code Conventions
+- Use FX modules for dependency injection (see `internal/*/fx.go` files)
+- Services implement gRPC service interfaces from generated protobuf code
+- Use zap logger for structured logging
+- Follow Go naming conventions and package structure
+- Keep internal packages in `internal/` directory
+
+## Docker
+- Dockerfile available for containerization
+- Image registry: https://hub.docker.com/repository/docker/troydai/grpcbeacon
+
+## Important Notes
+- Always run `make gen` after modifying `.proto` files
+- Never commit changes to `gen/go/` directory
+- Use FX lifecycle for proper service initialization and shutdown
+- TLS is configured in `internal/rpc/tls.go`
+- Health checks are implemented via gRPC health service
