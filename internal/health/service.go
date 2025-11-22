@@ -34,6 +34,27 @@ func (s *healthcheck) Check(_ context.Context, req *healthapi.HealthCheckRequest
 	return nil, status.Errorf(codes.NotFound, "service %s not found", req.Service)
 }
 
+func (s *healthcheck) Watch(req *healthapi.HealthCheckRequest, stream healthapi.Health_WatchServer) error {
+	var resp *healthapi.HealthCheckResponse
+	switch req.Service {
+	case "", "liveness", "readiness", "Beacon":
+		resp = &healthapi.HealthCheckResponse{
+			Status: healthapi.HealthCheckResponse_SERVING,
+		}
+	default:
+		resp = &healthapi.HealthCheckResponse{
+			Status: healthapi.HealthCheckResponse_SERVICE_UNKNOWN,
+		}
+	}
+
+	if err := stream.Send(resp); err != nil {
+		return status.Error(codes.Canceled, "Stream has ended.")
+	}
+
+	<-stream.Context().Done()
+	return nil
+}
+
 func (s *healthcheck) Register(server *grpc.Server) error {
 	if s == nil {
 		return fmt.Errorf("health check service is nil")

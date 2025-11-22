@@ -183,6 +183,31 @@ func TestIntegration_HealthCheck(t *testing.T) {
 		assert.Contains(t, err.Error(), "service unknown-service not found")
 	})
 
+	t.Run("Health watch endpoint works", func(t *testing.T) {
+		conn, err := grpc.NewClient(
+			fmt.Sprintf("127.0.0.1:%d", port),
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+		)
+		require.NoError(t, err)
+		defer func() { require.NoError(t, conn.Close()) }()
+
+		client := healthpb.NewHealthClient(conn)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+
+		req := &healthpb.HealthCheckRequest{
+			Service: "",
+		}
+
+		stream, err := client.Watch(ctx, req)
+		require.NoError(t, err)
+
+		resp, err := stream.Recv()
+		require.NoError(t, err)
+		assert.Equal(t, healthpb.HealthCheckResponse_SERVING, resp.Status)
+	})
+
 	// Clean shutdown
 	stopCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
