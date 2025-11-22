@@ -1,4 +1,4 @@
-.PHONY: bin tools gen image push integration
+.PHONY: bin tools gen image push integration lint
 
 # Override with setting these two and run make with option -e
 ARCH=$(shell uname -m | tr '[:upper:]' '[:lower:]')
@@ -26,3 +26,6 @@ gen: $(PROTO_FILES)
 
 test:
 	@ go test -v -race ./...
+
+lint:
+	@ golangci-lint run --timeout=5m

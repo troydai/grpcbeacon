@@ -1,0 +1,40 @@
+name: Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  golangci-lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'  # Using 1.23 since 1.24 is not yet stable
+        cache: false  # golangci-lint-action has its own cache
+
+    - name: Install buf CLI
+      run: |
+        go install github.com/bufbuild/buf/cmd/buf@v1.34.0
+
+    - name: Generate protobuf files
+      run: |
+        make gen
+
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: latest
+        args: --timeout=5m

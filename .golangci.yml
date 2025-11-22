@@ -1,0 +1,68 @@
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  govet:
+    enable-all: true
+  gocyclo:
+    min-complexity: 15
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  misspell:
+    locale: US
+  lll:
+    line-length: 140
+  goimports:
+    local-prefixes: github.com/troydai/grpcbeacon
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+
+linters:
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gofmt
+    - goimports
+    - misspell
+    - goconst
+    - gocritic
+    - gocyclo
+    - dupl
+    - lll
+  disable:
+    - typecheck  # Disabled as it can conflict with generated code
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+    # Exclude generated files
+    - path: gen/
+      linters:
+        - all
+    # Exclude protobuf generated files
+    - path: \.pb\.go$
+      linters:
+        - all
+
+run:
+  timeout: 5m
+  tests: true
+  modules-download-mode: readonly

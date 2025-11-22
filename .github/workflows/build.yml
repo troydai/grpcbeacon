@@ -1,0 +1,43 @@
+name: Build Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'  # Using 1.23 since 1.24 is not yet stable
+        cache: true
+
+    - name: Install buf CLI
+      run: |
+        go install github.com/bufbuild/buf/cmd/buf@v1.34.0
+
+    - name: Generate protobuf files
+      run: |
+        make gen
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Build
+      run: make bin
+
+    - name: Run tests
+      run: make test
+
+    - name: Verify no uncommitted changes
+      run: |
+        git diff --exit-code || (echo "Generated files have uncommitted changes" && exit 1)
