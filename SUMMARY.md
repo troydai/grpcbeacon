@@ -1,8 +1,15 @@
 # Project Update Summary
 
-> Small documentation touch-up to confirm the CI pipeline still runs end-to-end.
+> Introducing a new GitHub Actions job dedicated to validating builds on every push/PR to `main`.
 
 _CI trigger: 2025-11-23_
+
+## ✅ Build Validation Workflow Added
+
+- Adds `.github/workflows/ci.yml` with a `build-validation` workflow.
+- Runs on pushes and pull requests targeting `main`.
+- Executes `go test -v ./...` followed by `go build ./...` using Go 1.24 from `go.mod`.
+- Ensures we always gate changes on a clean test/build before merging.
 
 ## 🚀 **Go Version Updated to 1.24 + Comprehensive Integration Tests**
 
