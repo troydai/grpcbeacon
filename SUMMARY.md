@@ -1,5 +1,7 @@
 # Project Update Summary
 
+> Small documentation touch-up to confirm the CI pipeline still runs end-to-end.
+
 ## 🚀 **Go Version Updated to 1.24 + Comprehensive Integration Tests**
 
 This document summarizes the successful update of the gRPC Beacon service to Go 1.24 and the addition of comprehensive integration tests.
