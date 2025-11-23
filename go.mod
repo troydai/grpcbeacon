@@ -2,6 +2,8 @@ module github.com/troydai/grpcbeacon
 
 go 1.24
 
+toolchain go1.24.10
+
 require (
 	github.com/BurntSushi/toml v1.5.0
 	github.com/caarlos0/env/v11 v11.3.1
